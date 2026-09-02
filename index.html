@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社区团购（精简开源版）</title>
+<meta name="description" content="免费开源的社区团购系统精简版：拼团活动浏览、在线参团、真实成团/未成团判定，后台商品与团购活动管理，真实增删改查功能，纯前端+localStorage实现，可作为学习或二次开发起点。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">社区<span class="accent">团购</span></div>
+    <a href="admin.html" class="nav-link">进入运营后台 →</a>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <h1>发现身边的拼团</h1>
+      <p>选一个正在拼团的活动，凑够团长设定的成团人数就能享受团购价。这是一个真实可用的精简开源系统，数据保存在你浏览器本地。</p>
+    </div>
+    <div id="campaignGrid" class="campaign-grid"></div>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <button class="modal-close" id="btnCloseModal">&times;</button>
+      <h2 id="modalCampaignName"></h2>
+      <p class="sub" id="modalCampaignInfo"></p>
+      <div id="modalMsg"></div>
+      <form id="joinForm" novalidate>
+        <input type="hidden" id="joinCampaignId">
+        <div class="field">
+          <label>姓名</label>
+          <input id="customerNameInput" type="text" required placeholder="用于自提核对的姓名">
+        </div>
+        <div class="field">
+          <label>手机号</label>
+          <input id="phoneInput" type="text" required placeholder="用于联系你的手机号">
+        </div>
+        <div class="field">
+          <label>数量</label>
+          <input id="qtyInput" type="number" min="1" value="1" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">提交参团</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

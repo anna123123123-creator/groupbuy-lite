@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>运营后台 · 社区团购（精简开源版）</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="brand">社区<span class="accent">团购</span> 后台</div>
+      <div class="side-link active" data-view="dashboard">仪表盘</div>
+      <div class="side-link" data-view="products">商品管理</div>
+      <div class="side-link" data-view="campaigns">团购活动管理</div>
+      <div class="side-link" id="btnResetData" style="margin-top:20px;color:var(--red)">重置示例数据</div>
+      <a href="index.html" class="side-link">← 返回前台</a>
+    </aside>
+
+    <main class="admin-main">
+      <section id="view-dashboard" class="admin-view active">
+        <div class="page-head"><h1>仪表盘</h1><p>团购活动与成交概览。</p></div>
+        <div class="stat-grid" id="statGrid"></div>
+        <table>
+          <thead><tr><th>团购活动</th><th>自提点 / 团长</th><th>参团人数</th><th>状态</th></tr></thead>
+          <tbody id="recentCampaignsBody"></tbody>
+        </table>
+      </section>
+
+      <section id="view-products" class="admin-view">
+        <div class="page-head"><h1>商品管理</h1><p>添加、编辑或删除拼团商品。</p></div>
+        <div class="table-toolbar">
+          <span></span>
+          <button class="btn btn-primary btn-sm" id="btnAddProduct">+ 新增商品</button>
+        </div>
+        <table>
+          <thead><tr><th>商品</th><th>团购价</th><th>原价</th><th>规格</th><th>操作</th></tr></thead>
+          <tbody id="productsBody"></tbody>
+        </table>
+      </section>
+
+      <section id="view-campaigns" class="admin-view">
+        <div class="page-head"><h1>团购活动管理</h1><p>创建、编辑团购活动，并查看参团人名单。</p></div>
+        <div class="table-toolbar">
+          <span></span>
+          <button class="btn btn-primary btn-sm" id="btnAddCampaign">+ 新增团购活动</button>
+        </div>
+        <table>
+          <thead><tr><th>商品</th><th>自提点</th><th>团长</th><th>参团人数 / 目标</th><th>截止时间</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody id="campaignsBody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- Product modal -->
+  <div class="modal-backdrop" id="productModalBackdrop">
+    <div class="modal">
+      <button class="modal-close" id="btnCloseProductModal">&times;</button>
+      <h2 id="productModalTitle">新增商品</h2>
+      <div id="productModalMsg"></div>
+      <form id="productForm" novalidate>
+        <input type="hidden" id="productIdInput">
+        <div class="field"><label>商品名称</label><input id="productNameInput" type="text" required></div>
+        <div class="field-row">
+          <div class="field"><label>团购价（元）</label><input id="productGroupPriceInput" type="number" min="0" step="0.1" required></div>
+          <div class="field"><label>原价（元）</label><input id="productOriginalPriceInput" type="number" min="0" step="0.1" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>规格单位</label><input id="productUnitInput" type="text" placeholder="例如 500g / 1箱" required></div>
+          <div class="field"><label>封面 Emoji</label><input id="productEmojiInput" type="text" placeholder="🥬" required></div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">保存</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Campaign modal -->
+  <div class="modal-backdrop" id="campaignModalBackdrop">
+    <div class="modal">
+      <button class="modal-close" id="btnCloseCampaignModal">&times;</button>
+      <h2 id="campaignModalTitle">新增团购活动</h2>
+      <div id="campaignModalMsg"></div>
+      <form id="campaignForm" novalidate>
+        <input type="hidden" id="campaignIdInput">
+        <div class="field">
+          <label>商品</label>
+          <select id="campaignProductInput" required></select>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>自提点名称</label><input id="campaignPickupInput" type="text" required></div>
+          <div class="field"><label>团长姓名</label><input id="campaignLeaderInput" type="text" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>成团目标人数</label><input id="campaignTargetInput" type="number" min="1" required></div>
+          <div class="field"><label>截止时间</label><input id="campaignDeadlineInput" type="datetime-local" required></div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">保存</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Participants modal -->
+  <div class="modal-backdrop" id="participantsModalBackdrop">
+    <div class="modal">
+      <button class="modal-close" id="btnCloseParticipantsModal">&times;</button>
+      <h2 id="participantsModalTitle">参团人名单</h2>
+      <p class="sub" id="participantsModalSub"></p>
+      <table>
+        <thead><tr><th>姓名</th><th>手机号</th><th>数量</th><th>参团时间</th></tr></thead>
+        <tbody id="participantsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
